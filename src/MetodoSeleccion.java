@@ -1,42 +1,31 @@
 public class MetodoSeleccion {
-    public void ordenar(int[] arreglo, boolean isDes) {
+    public void ordenar(int[] arreglo, boolean ascendente, boolean mostrarPasos) {
+        int comparaciones = 0, intercambios = 0;
         for (int i = 0; i < arreglo.length - 1; i++) {
             int indiceExtremo = i;
             for (int j = i + 1; j < arreglo.length; j++) {
-                if (isDes) { 
-                    if (arreglo[j] > arreglo[indiceExtremo]) {
-                        indiceExtremo = j;
-                    }
-                } else { 
-                    if (arreglo[j] < arreglo[indiceExtremo]) {
-                        indiceExtremo = j;
-                    }
+                comparaciones++;
+                if ((ascendente && arreglo[j] < arreglo[indiceExtremo]) || (!ascendente && arreglo[j] > arreglo[indiceExtremo])) {
+                    indiceExtremo = j;
                 }
             }
-            int aux = arreglo[i];
-            arreglo[i] = arreglo[indiceExtremo];
-            arreglo[indiceExtremo] = aux;
-        }
-    }
-
-    public void ordenarAscendente(int[] arreglo) {
-        for (int i = 0; i < arreglo.length - 1; i++) {
-            int indiceMin = i;
-            for (int j = i + 1; j < arreglo.length; j++) {
-                if (arreglo[j] < arreglo[indiceMin]) {
-                    indiceMin = j;
+            if (indiceExtremo != i) {
+                int aux = arreglo[i];
+                arreglo[i] = arreglo[indiceExtremo];
+                arreglo[indiceExtremo] = aux;
+                intercambios++;
+                if (mostrarPasos) {
+                    imprimirArreglo(arreglo);
                 }
             }
-            int aux = arreglo[i];
-            arreglo[i] = arreglo[indiceMin];
-            arreglo[indiceMin] = aux;
         }
+        System.out.println("Comparaciones: " + comparaciones + ", Intercambios: " + intercambios);
     }
 
     public void imprimirArreglo(int[] arreglo) {
-        for (int i = 0; i < arreglo.length; i++) {
-            System.out.print(arreglo[i] + " - ");
+        for (int num : arreglo) {
+            System.out.print(num + " - ");
         }
-       System.out.println("    ");
+        System.out.println();
     }
 }
